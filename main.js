@@ -17,8 +17,9 @@ add.onclick = function () {
   }
 };
 
-//delete
+
 tasks.addEventListener("click", (e) => {
+    //delete
   if (e.target.classList.contains("del")) {
     e.target.parentElement.remove();
 
@@ -30,6 +31,12 @@ tasks.addEventListener("click", (e) => {
 
     e.target.classList.toggle("done");
   }
+
+  if (e.target.classList.contains("inprog")) { 
+    const taskId = e.target.parentElement.getAttribute("data-id");
+    toggleInProg(taskId);
+    e.target.parentElement.classList.toggle("change");
+  }
 });
 
 function addTask(taskText) {
@@ -37,6 +44,7 @@ function addTask(taskText) {
     title: taskText,
     id: Date.now(),
     completed: false,
+    inprogress: false,
   };
   tasksArray.push(task);
   addElementsToPage(tasksArray);
@@ -52,7 +60,11 @@ function addElementsToPage(tasksArray) {
     div.className = "task";
 
     if (task.completed === true) {
-      div.className = "task done";
+      div.classList.add ("done");  
+    }
+
+    if (task.inprogress === true) {
+        div.classList.add("change") 
     }
 
     div.setAttribute("data-id", task.id);
@@ -62,6 +74,11 @@ function addElementsToPage(tasksArray) {
     span.className = "del";
     span.appendChild(document.createTextNode("delete"));
     div.appendChild(span);
+
+    let span2 = document.createElement("span");  
+    span2.className = "inprog";
+    span2.appendChild(document.createTextNode("inprogress"));
+    div.appendChild(span2);
 
     tasks.appendChild(div);
   });
@@ -93,4 +110,13 @@ function toggleStatus(taskId) {
     }
   }
   addDataToLS(tasksArray);
+}
+
+function toggleInProg(taskId) {
+    for (let i = 0; i < tasksArray.length; i++) {
+        if(tasksArray[i].id == taskId){
+            tasksArray[i].inprogress= !tasksArray[i].inprogress;
+        }        
+    }
+    addDataToLS(tasksArray);
 }

@@ -39,11 +39,11 @@
     padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     border: none;
     border-radius: 5px;
     margin-bottom: 10px;
     cursor: pointer;
+    gap: 5px;
 }
 .task span{
     background-color: #1f9ae4;
@@ -51,6 +51,13 @@
     padding: 3px 6px;
     border-radius: 3px;
 }
+.task span:first-of-type{
+    margin-left: auto;
+}
 .task.done{
     opacity: 0.5;
+}
+
+.task.change{
+    border: 2px solid #1f9ae4;
 }
